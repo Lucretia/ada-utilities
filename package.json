@@ -1,0 +1,110 @@
+{
+	"name": "ada-utilities",
+	"displayName": "Ada Utilities",
+	"description": "A set of useful tools for Ada progammers.",
+	"author": {
+		"name": "Luke A. Guest",
+		"url": "http://codecoolstuff.com"
+	},
+	"license": "GPL-3.0+",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.40.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.gotoSpecification",
+		"onCommand:extension.gotoBody",
+		"onCommand:extension.switchToPackageBodySpec"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"enablement": "resourceLangId == ada && resourceExtname == .adb",
+				"command": "extension.gotoSpecification",
+				"title": "Ada: Go to package specification"
+			},
+			{
+				"enablement": "resourceLangId == ada && resourceExtname == .ads",
+				"command": "extension.gotoBody",
+				"title": "Ada: Go to package body"
+			},
+			{
+				"enablement": "resourceLangId == ada",
+				"command": "extension.switchToPackageBodySpec",
+				"title": "Ada: Switch between package specification <-> body"
+			}
+		],
+		"menus": {
+			"editor/title/context": [
+				{
+					"when": "resourceLangId == ada && resourceExtname == .adb",
+					"command": "extension.gotoSpecification",
+					"group": "ada"
+				},
+				{
+					"when": "resourceLangId == ada && resourceExtname == .ads",
+					"command": "extension.gotoBody",
+					"group": "ada"
+				},
+				{
+					"when": "resourceLangId == ada",
+					"command": "extension.switchToPackageBodySpec",
+					"group": "ada"
+				}
+			],
+			"editor/context": [
+				{
+					"when": "resourceLangId == ada && resourceExtname == .adb",
+					"command": "extension.gotoSpecification",
+					"group": "ada"
+				},
+				{
+					"when": "resourceLangId == ada && resourceExtname == .ads",
+					"command": "extension.gotoBody",
+					"group": "ada"
+				},
+				{
+					"when": "resourceLangId == ada",
+					"command": "extension.switchToPackageBodySpec",
+					"group": "ada"
+				}
+			]
+		},
+		"keybindings": [
+			{
+				"command": "extension.gotoSpecification",
+				"key": "meta+alt+s"
+			},
+			{
+				"command": "extension.gotoBody",
+				"key": "meta+alt+b"
+			},
+			{
+				"command": "extension.switchToPackageBodySpec",
+				"key": "meta+alt+t"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.40.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.2",
+		"typescript": "^3.6.4",
+		"tslint": "^5.20.0",
+		"vscode-test": "^1.2.2"
+	}
+}

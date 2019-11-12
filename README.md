@@ -1,20 +1,22 @@
-# ada-utilities README
+# Ada Utilities
 
-This is the README for your extension "ada-utilities". After writing up a brief description, we recommend including the following sections.
+This is a VSCode extension Ada programmers which provides a few utility functions.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Commands
 
-For example if there is an image subfolder under your extension project workspace:
+* Go to Ada specification / body.
+* Switch between the specification and body.
 
-\!\[feature X\]\(images/feature-x.png\)
+### Menus
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+The above commands are available from the editor context menus.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+* [Ada Language Server](https://github.com/AdaCore/ada_language_server)
+* [Ada VSCode](https://github.com/Lucretia/ada-vscode)
 
 ## Extension Settings
 
