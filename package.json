@@ -7,7 +7,7 @@
 		"url": "http://codecoolstuff.com"
 	},
 	"license": "GPL-3.0+",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
@@ -86,6 +86,53 @@
 			{
 				"command": "extension.switchToPackageBodySpec",
 				"key": "meta+alt+t"
+			}
+		],
+		"problemMatchers": [
+			{
+				"name": "gprbuild_errors",
+				"source": "GPR Build",
+				"owner": "ada",
+				"severity": "error",
+				"fileLocation": ["autoDetect", "${workspaceFolder}/src"],
+				"applyTo": "allDocuments",
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(\\d+):(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"message": 4
+				}
+			},
+			{
+				"name": "gprbuild_warnings_info",
+				"source": "GPR Build",
+				"owner": "ada",
+				"severity": "info",
+				"fileLocation": ["autoDetect", "${workspaceFolder}/src"],
+				"applyTo": "allDocuments",
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(\\d+): [(]style[)] (.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"message": 4
+				}
+			},
+			{
+				"name": "gprbuild_warnings",
+				"source": "GPR Build",
+				"owner": "ada",
+				"severity": "info",
+				"fileLocation": ["autoDetect", "${workspaceFolder}/src"],
+				"applyTo": "allDocuments",
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(\\d+):.*warning:.*(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"message": 4
+				}
 			}
 		]
 	},
