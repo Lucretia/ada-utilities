@@ -24,25 +24,31 @@ The above commands are available from the editor context menus.
 
 ## Extension Settings
 
-Add the following to your ```tasks.json``` file:
+Modify the ```flags``` option and add the following to your ```tasks.json``` file if your source isn't in ```${workspaceFolder}/src```:
 
 ```
     "tasks": [
         {
-            "label": "Ada: Build (make)",
-            "command": "make",
-            "args": [ "-C", "build/gnat" ],
-            "problemMatcher": [ "$gprbuild_warnings_info", "$gprbuild_warnings", "$gprbuild_errors" ],
-            "presentation": {
-                "echo": false,
-                "reveal": "never",
-                "focus": true,
-                "panel": "shared",
-                "showReuseMessage": false,
-                "revealProblems": "onProblem",
-                "clear": true
-            },
-            "type": "shell",
+            "type": "adamakeall",
+            "flags": "-C /tmp/example -f makefile",
+            "problemMatcher": [
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_warnings_info"
+                },
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_warnings_info"
+                },
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_warnings"
+                },
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_errors"
+                }
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true

@@ -7,7 +7,7 @@
 		"url": "http://codecoolstuff.com"
 	},
 	"license": "GPL-3.0+",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
@@ -17,7 +17,9 @@
 	"activationEvents": [
 		"onCommand:extension.gotoSpecification",
 		"onCommand:extension.gotoBody",
-		"onCommand:extension.switchToPackageBodySpec"
+		"onCommand:extension.switchToPackageBodySpec",
+
+		"onCommand:workbench.action.tasks.runTask"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -132,6 +134,17 @@
 					"line": 2,
 					"column": 3,
 					"message": 4
+				}
+			}
+		],
+		"taskDefinitions": [
+			{
+				"type": "adamakeall",
+				"properties": {
+					"flags": {
+						"type": "string",
+						"description": "Flags to pass to make."
+					}
 				}
 			}
 		]

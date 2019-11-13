@@ -2,6 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { AdaMakeAllTask } from './tasks/Build';
+import { TaskRevealKind } from 'vscode';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -14,6 +16,50 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand("extension.gotoSpecification", gotoSpecification, context));
 	context.subscriptions.push(vscode.commands.registerCommand("extension.gotoBody", gotoBody, context));
 	context.subscriptions.push(vscode.commands.registerCommand("extension.switchToPackageBodySpec", switchToPackageBodySpec, context));
+
+	var problemMatchers = [ "$gprbuild_warnings_info", "$gprbuild_warnings", "$gprbuild_errors" ];
+	var presentationOptions: vscode.TaskPresentationOptions = {
+		clear: true,
+		echo: true,
+		focus: true,
+		showReuseMessage: false,
+		reveal: TaskRevealKind.Silent
+	};
+
+	vscode.tasks.registerTaskProvider("adamakeall", {
+        provideTasks(token?: vscode.CancellationToken) {
+			let task: AdaMakeAllTask = {
+				type: "adamakeall",
+				flags: ""
+			};
+
+			let buildTask = new vscode.Task(task, vscode.TaskScope.Workspace,
+				"Build (Using a makefile)", "Ada Utilities",
+				new vscode.ShellExecution("make"), problemMatchers)
+
+			buildTask.presentationOptions = presentationOptions;
+
+            return [buildTask];
+        },
+        resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
+			if (task) {
+				const definition: AdaMakeAllTask = <any>task.definition;
+
+				if (definition.flags) {
+					var buildTask = new vscode.Task(definition, vscode.TaskScope.Workspace,
+						 "Build (Using a makefile)", "Ada Utilities",
+						 new vscode.ShellExecution(`make ${definition.flags}`), problemMatchers);
+
+					buildTask.presentationOptions = presentationOptions;
+
+					return buildTask;
+				}
+			}
+
+            return undefined;
+        }
+    });
+
 }
 
 // this method is called when your extension is deactivated
