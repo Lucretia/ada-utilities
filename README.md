@@ -62,6 +62,45 @@ Modify the ```flags``` option and add the following to your ```tasks.json``` fil
     ]
 ```
 
+Or, if using gprbuild/gprclean:
+
+```
+    "tasks": [
+        {
+            "type": "adagprbuild",
+            "flags": "",
+            "post_flags": "-cargs -v",
+            "problemMatcher": [
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_warnings_info"
+                },
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_warnings_info"
+                },
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_warnings"
+                },
+                {
+                    "fileLocation": [ "autoDetect", "${workspaceFolder}"],
+                    "base": "$gprbuild_errors"
+                }
+             ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "adagprclean",
+            "flags": "",
+            "problemMatcher": []
+        }
+    ]
+```
+
 Alter the make ```args``` to match your source.
 
 

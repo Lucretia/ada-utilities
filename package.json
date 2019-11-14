@@ -7,7 +7,7 @@
 		"url": "http://codecoolstuff.com"
 	},
 	"license": "GPL-3.0+",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
@@ -153,6 +153,28 @@
 					"flags": {
 						"type": "string",
 						"description": "Flags to pass to make."
+					}
+				}
+			},
+			{
+				"type": "adagprbuild",
+				"properties": {
+					"flags": {
+						"type": "string",
+						"description": "Flags to pass to GPRBuild."
+					},
+					"post_flags": {
+						"type": "string",
+						"description": "Flags passed at the end of the command line to GPRBuild, i.e. -cargs, -largs, etc."
+					}
+				}
+			},
+			{
+				"type": "adagprclean",
+				"properties": {
+					"flags": {
+						"type": "string",
+						"description": "Flags to pass to GPRClean."
 					}
 				}
 			}

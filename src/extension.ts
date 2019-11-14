@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { AdaMakeAllTask, AdaMakeCleanTask } from './tasks/Build';
+import * as build from './tasks/Build';
 import { TaskRevealKind } from 'vscode';
 
 // this method is called when your extension is activated
@@ -28,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.tasks.registerTaskProvider("adamakeall", {
         provideTasks(token?: vscode.CancellationToken) {
-			let task: AdaMakeAllTask = {
+			let task: build.AdaMakeAllTask = {
 				type: "adamakeall",
 				flags: ""
 			};
@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
         },
         resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
 			if (task) {
-				const definition: AdaMakeAllTask = <any>task.definition;
+				const definition: build.AdaMakeAllTask = <any>task.definition;
 
 				if (definition.flags) {
 					var buildTask = new vscode.Task(definition, vscode.TaskScope.Workspace,
@@ -62,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.tasks.registerTaskProvider("adamakeclean", {
         provideTasks(token?: vscode.CancellationToken) {
-			let task: AdaMakeCleanTask = {
+			let task: build.AdaMakeCleanTask = {
 				type: "adamakeclean",
 				flags: ""
 			};
@@ -77,7 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
         },
         resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
 			if (task) {
-				const definition: AdaMakeCleanTask = <any>task.definition;
+				const definition: build.AdaMakeCleanTask = <any>task.definition;
 
 				if (definition.flags) {
 					var cleanTask = new vscode.Task(definition, vscode.TaskScope.Workspace,
@@ -94,6 +94,91 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
+	vscode.tasks.registerTaskProvider("adagprbuild", {
+        provideTasks(token?: vscode.CancellationToken) {
+			let task: build.AdaGPRBuildTask = {
+				type: "adagprbuild",
+				flags: "",
+				post_flags: ""
+			};
+
+			const gprFile:string = <string>vscode.workspace.getConfiguration().get("ada.projectFile");
+
+			let buildTask = new vscode.Task(task, vscode.TaskScope.Workspace,
+				"GPR Build", "Ada Utilities",
+				new vscode.ShellExecution(`gprbuild -P${gprFile}`), problemMatchers)
+
+			buildTask.presentationOptions = presentationOptions;
+
+            return [buildTask];
+        },
+        resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
+			if (task) {
+				const definition: build.AdaGPRBuildTask = <any>task.definition;
+
+				const gprFile:string = <string>vscode.workspace.getConfiguration().get("ada.projectFile");
+				var command:string = "gprbuild";
+
+				if (definition.flags) {
+					command += ` ${definition.flags}`;
+				}
+
+				command += ` -P${gprFile}`;
+
+				if (definition.post_flags) {
+					command += ` ${definition.post_flags}`;
+				}
+
+				var buildTask = new vscode.Task(definition, vscode.TaskScope.Workspace,
+					"GPR Build", "Ada Utilities",
+					new vscode.ShellExecution(command), problemMatchers);
+
+			   	buildTask.presentationOptions = presentationOptions;
+
+			   	return buildTask;
+	   		}
+
+            return undefined;
+        }
+    });
+
+	vscode.tasks.registerTaskProvider("adagprclean", {
+        provideTasks(token?: vscode.CancellationToken) {
+			let task: build.AdaGPRCleanTask = {
+				type: "adagprclean",
+				flags: ""
+			};
+
+			const gprFile:string = <string>vscode.workspace.getConfiguration().get("ada.projectFile");
+
+			let cleanTask = new vscode.Task(task, vscode.TaskScope.Workspace,
+				"GPR Clean", "Ada Utilities",
+				new vscode.ShellExecution(`gprclean -P${gprFile}`), undefined)
+
+			cleanTask.presentationOptions = presentationOptions;
+
+            return [cleanTask];
+        },
+        resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
+			if (task) {
+				const definition: build.AdaGPRCleanTask = <any>task.definition;
+
+				const gprFile:string = <string>vscode.workspace.getConfiguration().get("ada.projectFile");
+
+				if (definition.flags) {
+					var cleanTask = new vscode.Task(definition, vscode.TaskScope.Workspace,
+						 "GPR Clean", "Ada Utilities",
+						 new vscode.ShellExecution(`gprclean ${definition.flags} -P${gprFile}`), undefined);
+
+					cleanTask.presentationOptions = presentationOptions;
+
+					return cleanTask;
+				}
+			}
+
+            return undefined;
+        }
+    });
 }
 
 // this method is called when your extension is deactivated
