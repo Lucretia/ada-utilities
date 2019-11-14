@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { AdaMakeAllTask } from './tasks/Build';
+import { AdaMakeAllTask, AdaMakeCleanTask } from './tasks/Build';
 import { TaskRevealKind } from 'vscode';
 
 // this method is called when your extension is activated
@@ -53,6 +53,40 @@ export function activate(context: vscode.ExtensionContext) {
 					buildTask.presentationOptions = presentationOptions;
 
 					return buildTask;
+				}
+			}
+
+            return undefined;
+        }
+    });
+
+	vscode.tasks.registerTaskProvider("adamakeclean", {
+        provideTasks(token?: vscode.CancellationToken) {
+			let task: AdaMakeCleanTask = {
+				type: "adamakeclean",
+				flags: ""
+			};
+
+			let cleanTask = new vscode.Task(task, vscode.TaskScope.Workspace,
+				"Clean (Using a makefile)", "Ada Utilities",
+				new vscode.ShellExecution("make clean"), undefined)
+
+			cleanTask.presentationOptions = presentationOptions;
+
+            return [cleanTask];
+        },
+        resolveTask(task: vscode.Task, token?: vscode.CancellationToken) {
+			if (task) {
+				const definition: AdaMakeCleanTask = <any>task.definition;
+
+				if (definition.flags) {
+					var cleanTask = new vscode.Task(definition, vscode.TaskScope.Workspace,
+						 "Clean (Using a makefile)", "Ada Utilities",
+						 new vscode.ShellExecution(`make ${definition.flags} clean`), undefined);
+
+					cleanTask.presentationOptions = presentationOptions;
+
+					return cleanTask;
 				}
 			}
 

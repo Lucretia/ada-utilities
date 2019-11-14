@@ -7,7 +7,7 @@
 		"url": "http://codecoolstuff.com"
 	},
 	"license": "GPL-3.0+",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
@@ -140,6 +140,15 @@
 		"taskDefinitions": [
 			{
 				"type": "adamakeall",
+				"properties": {
+					"flags": {
+						"type": "string",
+						"description": "Flags to pass to make."
+					}
+				}
+			},
+			{
+				"type": "adamakeclean",
 				"properties": {
 					"flags": {
 						"type": "string",
