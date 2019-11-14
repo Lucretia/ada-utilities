@@ -28,6 +28,8 @@ The GPR tools get the gpr filename from the workspace settings, ```ada.projectFi
 
 ## Requirements
 
+Not strictly requirements, but these are the two other extensions I use at this time. They make Ada programming a bit easier at least.
+
 * [Ada Language Server](https://github.com/AdaCore/ada_language_server)
 * [Ada VSCode](https://github.com/Lucretia/ada-vscode)
 
