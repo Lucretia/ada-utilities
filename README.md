@@ -17,6 +17,11 @@ The above commands are available from the editor context menus.
 
 * GPRBuild
 
+### Tasks
+
+* Make all (uses the above problem matchers).
+* Make clean (no problem matchers at this time).
+
 ## Requirements
 
 * [Ada Language Server](https://github.com/AdaCore/ada_language_server)
