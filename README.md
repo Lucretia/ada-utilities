@@ -21,6 +21,10 @@ The above commands are available from the editor context menus.
 
 * Make all (uses the above problem matchers).
 * Make clean (no problem matchers at this time).
+* GPRBuild
+* GPRClean
+
+The GPR tools get the gpr filename from the workspace settings, ```ada.projectFile``` which is the same value used in the [Ada language server](https://github.com/AdaCore/ada_language_server).
 
 ## Requirements
 
