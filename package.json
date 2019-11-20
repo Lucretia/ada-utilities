@@ -8,6 +8,7 @@
 	},
 	"license": "GPL-3.0+",
 	"version": "0.0.5",
+	"publisher": "codecoolstuff",
 	"engines": {
 		"vscode": "^1.40.0"
 	},
